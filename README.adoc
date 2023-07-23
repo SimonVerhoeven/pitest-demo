@@ -1,3 +1,22 @@
 = Pitest - demo
 :toc:
 :toc-placement:
+
+== Introduction
+
+Pitest is a library that helps us do mutation testing, and thus helps us get a measure of the quality of our tests.
+It works by randomly seeding variations (aka mutants) in the code that's being tested.
+Hence our tests will run against variants of the code we're intending to test.
+If the test fails, the mutation is killed, if it still passes it lives.
+
+Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results and thus to failing tests.
+
+== Ok, but why?
+
+By default coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
+After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
+
+== References
+
+* https://pitest.org/[Official website]
+* https://github.com/STAMP-project/pitest-descartes[Descartes] - a mutation plugin engine for PIT implementing extreme mutation operators
