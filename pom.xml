@@ -67,6 +67,38 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.14.2</version>
+                <dependencies>
+<!--                    We need this plugin if we're using JUnit 5-->
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+<!--                    defines which classes will be mutated, please pay attention to the * at the end! -->
+                    <targetClasses>
+                        <param>dev.simonverhoeven.pitestdemo*</param>
+                    </targetClasses>
+<!--                    defines which tests will be executed, please pay attention to the * at the end! -->
+                    <targetTests>
+                        <param>dev.simonverhoeven.pitestdemo*</param>
+                    </targetTests>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

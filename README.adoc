@@ -10,6 +10,7 @@ Hence, our tests will run against variants of the code we're intending to test.
 If the test fails, the mutation is killed, if it still passes it lives.
 
 Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results and thus to failing tests.
+So to further reduce the survivors we will need to enhance our testcases and/or add extra ones.
 
 Mutations can take a lot of forms, relational operators being switched around, increments becoming decrements, calls to void methods being removed, ...
 A full list be be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
@@ -18,6 +19,7 @@ A full list be be found on the https://pitest.org/quickstart/mutators/[Pitest Mu
 
 By default, coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
 After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
+It can also helps us find issues if there were gaps in our **T**est **D**riven **D**evelopment cadence.
 
 == A short demo
 
@@ -28,12 +30,61 @@ image::raw/jacoco.png[]
 A line & branch coverage of 100% magnificent isn't it?
 Of course if we then take a look at our link:src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen eyed will spot the lack of assertions.
 
+Now of course a proper analysis tool like Sonar will point out this lack of assertions, but it's always nice to spot this sooner.
 
+In this project a basic Pitest setup has already been done, so we can also take a look at those results at target/pit-reports/index.html.
+
+As you can see
+
+image::raw/report1.png[]
+
+Things look a lot less good over here. Pitest mutated our code, and 6 out of 7 mutations survived.
+If we click on the package, and then our main class, we can see which mutations were applied, where, and which survived.
+
+image::raw/report2.png[]
+
+Now we know which holes in our testing remain, we can work towards fixing these and after these steps we can rerun the Pitests to verify how many mutations remain alive.
+
+For example let's add quite a (too) simplistic check for our decay:
+
+[source,java]
+----
+@Test
+void decays() {
+    int initialSize = 100;
+    int result = Main.calculateSize(false, 100, true, true, 5, 5);
+    assertTrue(initialSize > result);
+}
+----
+
+If we then run Pitest again, we'll already see some improvements:
+
+image::raw/report3.png[]
+
+However, we'll notice there are still a couple of surviving mutations.
+For example the second one, which makes since given both `100 - 5 * 5` and `100 - 5 / 5` result in a number lower than than 100.
+
+Now if we replace the above test with:
+
+[source,java]
+----
+@Test
+void decays() {
+    int initialSize = 100;
+    int result = Main.calculateSize(false, 100, true, true, 5, 5);
+    assertTrue(initialSize > result);
+}
+----
+
+And rerun our tests we'll see that another mutation has joined the choir invisible:
+
+image::raw/report4.png[]
 
 == Notes
 
 * PIT can take a while to run
 * Pitest is deterministic, not random
+* the `pitest-junit5-plugin` plugin is needed when you're using `JUnit 5`
 
 == References
 

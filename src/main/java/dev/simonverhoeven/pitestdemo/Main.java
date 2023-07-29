@@ -1,10 +1,13 @@
 package dev.simonverhoeven.pitestdemo;
 
 public interface Main {
+    int decay_per_year = 5;
 
-    public static int calculate(boolean alive, boolean acceleratedGrowth, boolean badWeather, int growthPerYear, int years) {
+    public static int calculateSize(boolean alive, int initialSize, boolean acceleratedGrowth, boolean badWeather, int growthPerYear, int years) {
+        final int decayPerYear = 5;
+
         if (!alive) {
-            return 0;
+            return initialSize - decayPerYear * years;
         }
 
         int growth = growthPerYear;
@@ -16,7 +19,7 @@ public interface Main {
             growth = growth * 2;
         }
 
-        return growth * years;
+        return initialSize + growth * years;
 
     }
 }
