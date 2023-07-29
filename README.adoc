@@ -19,8 +19,15 @@ A full list be be found on the https://pitest.org/quickstart/mutators/[Pitest Mu
 By default, coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
 After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
 
-For example, if we generate the jacoco coverage using set1 we'll see that we have a line & branch coverage of 100% magnificent isn't it?
-Of course the keen eyed will spot the lack of assertions.
+== A short demo
+
+Let's run `mvn test` on this project, and we'll get this magnificent jacoco project:
+
+image::raw/jacoco.png[]
+
+A line & branch coverage of 100% magnificent isn't it?
+Of course if we then take a look at our link:src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen eyed will spot the lack of assertions.
+
 
 
 == Notes
