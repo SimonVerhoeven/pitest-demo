@@ -31,14 +31,32 @@ public class MainTest {
 //        assertTrue(initialSize > result);
 //    }
 
-//    @Test
-//    void decays() {
-//        int initialSize = 100;
-//        int years = 5;
-//        int expected = initialSize - years * Main.decay_per_year;
-//
-//        int result = Main.calculateSize(false, 100, true, true, 5, years);
-//        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
-//    }
+    @Test
+    void decays() {
+        boolean alive = false;
+        int initialSize = 100;
+        int years = 5;
+        int growthPerYear = 5;
+        boolean badWeather = false;
+        int expected = initialSize - years * Main.decay_per_year;
+        boolean acceleratedGrowth = false;
+
+        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
+    }
+
+    @Test
+    void aliveWithNiceWeatherAndNormalGrowth() {
+        boolean alive = true;
+        int initialSize = 100;
+        int years = 5;
+        int growthPerYear = 5;
+        boolean acceleratedGrowth = false;
+        boolean badWeather = false;
+        int expected = initialSize + years * growthPerYear;
+
+        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
+    }
 
 }

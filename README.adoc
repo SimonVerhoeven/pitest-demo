@@ -70,15 +70,56 @@ Now if we replace the above test with:
 ----
 @Test
 void decays() {
-    int initialSize = 100;
-    int result = Main.calculateSize(false, 100, true, true, 5, 5);
-    assertTrue(initialSize > result);
+        boolean alive = false;
+        int initialSize = 100;
+        int years = 5;
+        int growthPerYear = 5;
+        boolean badWeather = false;
+        int expected = initialSize - years * Main.decay_per_year;
+        boolean acceleratedGrowth = false;
+
+        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
 }
 ----
 
-And rerun our tests we'll see that another mutation has joined the choir invisible:
+And rerun our tests we'll see that 2 more mutations have joined the choir invisible:
 
 image::raw/report4.png[]
+
+**Note**: hovering over a covered mutation will show you which testcase(s) have killed it:
+
+image::raw/solvedmutation.png[]
+
+Now if we take a look at the remaining mutations we notice we can cover a lot of mutations in one by testing our happy path:
+
+* the two negated conditionals
+* addition replaced with substraction
+* multiplication replaced with division
+
+By adding this test case
+[source, java]
+----
+@Test
+    void aliveWithNiceWeatherAndNormalGrowth() {
+        boolean alive = true;
+        int initialSize = 100;
+        int years = 5;
+        int growthPerYear = 5;
+        boolean acceleratedGrowth = false;
+        boolean badWeather = false;
+        int expected = initialSize + years * growthPerYear;
+
+        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
+    }
+----
+
+And as we can see after our run:
+
+image::raw/report5.png[]
+
+In this manner we can keep eliminating the gaps in our test coverage.
 
 == Notes
 
