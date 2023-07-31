@@ -19,9 +19,9 @@ A full list be be found on the https://pitest.org/quickstart/mutators/[Pitest Mu
 
 By default, coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
 After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
-It can also helps us find issues if there were gaps in our **T**est **D**riven **D**evelopment cadence.
+It can also help us find issues if there were gaps in our **T**est **D**riven **D**evelopment cadence.
 
-== A short demo
+== Short demo
 
 Let's run `mvn test` on this project, and we'll get this magnificent jacoco project:
 
@@ -94,7 +94,7 @@ image::raw/solvedmutation.png[]
 Now if we take a look at the remaining mutations we notice we can cover a lot of mutations in one by testing our happy path:
 
 * the two negated conditionals
-* addition replaced with substraction
+* addition replaced with subtraction
 * multiplication replaced with division
 
 By adding this test case
@@ -121,10 +121,16 @@ image::raw/report5.png[]
 
 In this manner we can keep eliminating the gaps in our test coverage.
 
+== Configuration
+
+Pitest can be quite a resource intensive plugin, so proper configuration is important.
+For example you can define which code is mutated, and which tests are run using it using `targetClasses` and `targetTests` respectively.
+
 == Notes
 
 * PIT can take a while to run
 * Pitest is deterministic, not random
+* you can use use Pitest from the command line, but using one of the build plugins is recommended, see for reference: https://pitest.org/quickstart/commandline/[command line quick start]
 * the `pitest-junit5-plugin` plugin is needed when you're using `JUnit 5`
 
 == References

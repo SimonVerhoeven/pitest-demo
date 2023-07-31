@@ -89,6 +89,20 @@
                     <targetTests>
                         <param>dev.simonverhoeven.pitestdemo*</param>
                     </targetTests>
+<!--                    <maxMutationsPerClass>20</maxMutationsPerClass>-->
+<!--                    mutators defines the list if mutators to apply, we can define individual ones, or pass in a one of the group names (OLD/DEFAULTS/DEFAULTS/STRONGER/ALL)-->
+<!--                    <mutators>-->
+<!--                        <mutator>-->
+<!--                            ALL-->
+<!--                        </mutator>-->
+<!--                        vs-->
+<!--                        <mutator>-->
+<!--                            INVERT_NEGS-->
+<!--                        </mutator>-->
+<!--                        <mutator>-->
+<!--                            MATH-->
+<!--                        </mutator>-->
+<!--                    </mutators>-->
                 </configuration>
                 <executions>
                     <execution>
