@@ -137,9 +137,23 @@ For example you can define which code is mutated, and which tests are run using 
 
 You can define the percentage of mutations that should be eliminated using `mutationThreshold`.
 
+== Advice
+
+The value of mutation testing lies in the analysis and the actions taken, not its execution.
+
+Given the resource cost it might be tempting to only run it nightly on your CI server. But it's like a tree falling in a forest. If nobody looks at the results, did the mutation tests really run?
+
+Now of course, as documented earlier you can certainly set a target mutation score, and whilst that will help pinpoint gaps at the end, it's like a last minute scope change.
+One thinks they're done, but yet not quite. It might make one grumble a bit, and add some testcases to satisfy the tool which is the wrong motivator.
+
+It's a tool to help you receive quick feedback in your development lifecycle, not at the end.
+
+Please run it before your code's set in stone, especially as the implications of certain mutations might help point out spots where a different approach might be a better fit.
+
+
 == Notes
 
-* PIT can take a while to run, consider using slices, and using specific rules
+* Pitest can take a while to run, consider using slices, and using specific rules
 * Pitest is deterministic, not random
 * Mutants are created by bytecode manipulation
 * you can use use Pitest from the command line, but using one of the build plugins is recommended, see for reference: https://pitest.org/quickstart/commandline/[command line quick start]
