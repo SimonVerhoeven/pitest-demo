@@ -81,6 +81,9 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+<!--                    Mutation threshold defines the percentage of mutations that should be eliminated-->
+<!--                    <mutationThreshold>100</mutationThreshold>-->
+                    <failWhenNoMutations>false</failWhenNoMutations>
 <!--                    defines which classes will be mutated, please pay attention to the * at the end! -->
                     <targetClasses>
                         <param>dev.simonverhoeven.pitestdemo*</param>

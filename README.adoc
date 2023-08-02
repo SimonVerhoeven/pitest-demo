@@ -2,24 +2,33 @@
 :toc:
 :toc-placement:
 
-== Introduction
+== What is it?
 
 Pitest is a library that helps us do mutation testing, and thus helps us get a measure of the quality of our tests.
 It works by randomly seeding variations (aka mutants) in the code that's being tested.
 Hence, our tests will run against variants of the code we're intending to test.
 If the test fails, the mutation is killed, if it still passes it lives.
 
-Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results and thus to failing tests.
+Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results, and thus to failing tests.
 So to further reduce the survivors we will need to enhance our testcases and/or add extra ones.
 
+In other words, Pitest helps you assess the *quality* of your test suite.
+
 Mutations can take a lot of forms, relational operators being switched around, increments becoming decrements, calls to void methods being removed, ...
-A full list be be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
+
+A full list can be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
 
 == Ok, but why?
 
+The question we have to ask ourselves is: `Who watches the watchmen?`
+
 By default, coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
+
 After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
 It can also help us find issues if there were gaps in our **T**est **D**riven **D**evelopment cadence.
+
+`We test our tests`
+
 
 == Short demo
 
@@ -70,16 +79,16 @@ Now if we replace the above test with:
 ----
 @Test
 void decays() {
-        boolean alive = false;
-        int initialSize = 100;
-        int years = 5;
-        int growthPerYear = 5;
-        boolean badWeather = false;
-        int expected = initialSize - years * Main.decay_per_year;
-        boolean acceleratedGrowth = false;
+    boolean alive = false;
+    int initialSize = 100;
+    int years = 5;
+    int growthPerYear = 5;
+    boolean badWeather = false;
+    int expected = initialSize - years * Main.decay_per_year;
+    boolean acceleratedGrowth = false;
 
-        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
-        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
+    int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+    assertEquals(expected, result, "The expected size, and resulting size should be equal!");
 }
 ----
 
@@ -101,18 +110,18 @@ By adding this test case
 [source, java]
 ----
 @Test
-    void aliveWithNiceWeatherAndNormalGrowth() {
-        boolean alive = true;
-        int initialSize = 100;
-        int years = 5;
-        int growthPerYear = 5;
-        boolean acceleratedGrowth = false;
-        boolean badWeather = false;
-        int expected = initialSize + years * growthPerYear;
+void aliveWithNiceWeatherAndNormalGrowth() {
+    boolean alive = true;
+    int initialSize = 100;
+    int years = 5;
+    int growthPerYear = 5;
+    boolean acceleratedGrowth = false;
+    boolean badWeather = false;
+    int expected = initialSize + years * growthPerYear;
 
-        int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
-        assertEquals(expected, result, "The expected size, and resulting size should be equal!");
-    }
+    int result = Main.calculateSize(alive, initialSize, acceleratedGrowth, badWeather, growthPerYear, years);
+    assertEquals(expected, result, "The expected size, and resulting size should be equal!");
+}
 ----
 
 And as we can see after our run:
@@ -126,10 +135,13 @@ In this manner we can keep eliminating the gaps in our test coverage.
 Pitest can be quite a resource intensive plugin, so proper configuration is important.
 For example you can define which code is mutated, and which tests are run using it using `targetClasses` and `targetTests` respectively.
 
+You can define the percentage of mutations that should be eliminated using `mutationThreshold`.
+
 == Notes
 
-* PIT can take a while to run
+* PIT can take a while to run, consider using slices, and using specific rules
 * Pitest is deterministic, not random
+* Mutants are created by bytecode manipulation
 * you can use use Pitest from the command line, but using one of the build plugins is recommended, see for reference: https://pitest.org/quickstart/commandline/[command line quick start]
 * the `pitest-junit5-plugin` plugin is needed when you're using `JUnit 5`
 
@@ -138,3 +150,4 @@ For example you can define which code is mutated, and which tests are run using 
 * https://pitest.org/[Official website]
 * https://www.arcmutate.com/[Arcmutate] - from the team behind Pitest, offers extra operators
 * https://github.com/STAMP-project/pitest-descartes[Descartes] - a mutation plugin engine for PIT implementing extreme mutation operators
+* https://research.google/pubs/pub46584/[State of Mutation Testing at Google]
