@@ -10,7 +10,7 @@ Hence, our tests will run against variants of the code we're intending to test.
 If the test fails, the mutation is killed, if it still passes it lives.
 
 Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results, and thus to failing tests.
-So to further reduce the survivors we will need to enhance our testcases and/or add extra ones.
+So to further reduce the survivors we will need to enhance our test cases and/or add extra ones.
 
 In other words, Pitest helps you assess the *quality* of your test suite.
 
@@ -32,11 +32,11 @@ It can also help us find issues if there were gaps in our **T**est **D**riven **
 
 == A short demo
 
-Let's run `mvn test` on this project, and we'll get this magnificent jacoco project:
+Let's run `mvn test` on this project, and we'll get this magnificent JaCoCo project:
 
 image::raw/jacoco.png[]
 
-A line & branch coverage of 100% magnificent isn't it?
+A line & branch coverage of 100% magnificent, isn't it?
 Of course if we then take a look at our link:src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen eyed will spot the lack of assertions.
 
 Now of course a proper analysis tool like Sonar will point out this lack of assertions, but it's always nice to spot this sooner.
@@ -71,7 +71,7 @@ If we then run Pitest again, we'll already see some improvements:
 image::raw/report3.png[]
 
 However, we'll notice there are still a couple of surviving mutations.
-For example the second one, which makes since given both `100 - 5 * 5` and `100 - 5 / 5` result in a number lower than than 100.
+For example the second one, which makes since given both `100 - 5 * 5` and `100 - 5 / 5` result in a number lower than 100.
 
 Now if we replace the above test with:
 
@@ -133,9 +133,66 @@ In this manner we can keep eliminating the gaps in our test coverage.
 == Configuration
 
 Pitest can be quite a resource intensive plugin, so proper configuration is important.
-For example you can define which code is mutated, and which tests are run using it using `targetClasses` and `targetTests` respectively.
+For example, you can define which code is mutated, and which tests are run using it using `targetClasses` and `targetTests` respectively.
 
-You can define the percentage of mutations that should be eliminated using `mutationThreshold`.
+You can define the percentage of mutations that should be eliminated using `mutationThreshold`
+
+A list of configuration options can be found on the https://pitest.org/quickstart/commandline/[command line quick start] page.
+The list of possible features is shown when verbose logging is enabled.
+
+== My setup
+
+Personally I like to use this setup:
+
+[code, xml]
+----
+<profile>
+    <id>pitest</id>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.14.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>pitest</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failWhenNoMutations>false</failWhenNoMutations>
+                    <timestampedReports>false</timestampedReports>
+                    <mutators>STRONGER</mutators>
+                    <withHistory>true</withHistory>
+                    <features>
+                        +auto_threads
+                    </features>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</profile>
+----
+
+With this setup I can just run `mvn -Ppitest test` to have everything mutated in my project, or I can pass in a glob to limit what gets mutated (`-DtargetClasses="dev.simonverhoeven.analyseme"`).
+It's configured so that:
+
+* no failure if there is nothing to mutate
+* no timestamped output folder for the results (false is the default, but sometimes I like to tweak it)
+* more mutators are used (STRONGER set)
+* history in/output files are enabled to speed up the analysis
+* auto threads is enabled, so it uses the number of threads reported by my current machine *NOTE:* it is not recommended to use this on a CI server
 
 == Advice
 
@@ -144,7 +201,7 @@ The value of mutation testing lies in the analysis and the actions taken, not it
 Given the resource cost it might be tempting to only run it nightly on your CI server. But it's like a tree falling in a forest. If nobody looks at the results, did the mutation tests really run?
 
 Now of course, as documented earlier you can certainly set a target mutation score, and whilst that will help pinpoint gaps at the end, it's like a last minute scope change.
-One thinks they're done, but yet not quite. It might make one grumble a bit, and add some testcases to satisfy the tool which is the wrong motivator.
+One thinks they're done, but yet not quite. It might make one grumble a bit, and add some test cases to satisfy the tool which is the wrong motivator.
 
 It's a tool to help you receive quick feedback in your development lifecycle, not at the end.
 
@@ -156,7 +213,7 @@ Please run it before your code's set in stone, especially as the implications of
 * use proper slicing, and specific rules to target what's actually of interest to you (see for reference this https://blog.pitest.org/dont-let-your-code-dry[blogpost])
 * increase the number of threads (1 by default), or make use of the `auto_threads` feature
 * there is experimental support for https://pitest.org/quickstart/incremental_analysis/[incremental analysis]
-* by making use of the https://docs.arcmutate.com/docs/accelerator.html[Arcmutate accelarator plugin]
+* by making use of the https://docs.arcmutate.com/docs/accelerator.html[Arcmutate accelerator plugin]
 
 . Are Pitests random? +
 No, they're deterministic
