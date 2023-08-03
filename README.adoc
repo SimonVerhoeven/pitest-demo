@@ -4,19 +4,19 @@
 
 == What is Pitest?
 
-Pitest is a library that helps us do mutation testing, and thus helps us get a measure of the quality of our tests.
+Pitest is a library that helps us do mutation testing and thus helps us get a measure of the quality of our tests.
 It works by randomly seeding variations (aka mutants) in the code that's being tested.
 Hence, our tests will run against variants of the code we're intending to test.
 If the test fails, the mutation is killed, if it still passes it lives.
 
-Surviving mutations may indicate issues with our test set, since application code changes should lead to different end results, and thus to failing tests.
+Surviving mutations may indicate issues with our test set since application code changes should lead to different end results, and thus to failing tests.
 So to further reduce the survivors we will need to enhance our test cases and/or add extra ones.
 
 In other words, Pitest helps you assess the *quality* of your test suite.
 
 Mutations can take a lot of forms, relational operators being switched around, increments becoming decrements, calls to void methods being removed, ...
 
-A full list can be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
+A full list can be found at the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
 
 == Ok, but why should I use it?
 
@@ -37,7 +37,7 @@ Let's run `mvn test` on this project, and we'll get this magnificent JaCoCo proj
 image::raw/jacoco.png[]
 
 A line & branch coverage of 100% magnificent, isn't it?
-Of course if we then take a look at our link:src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen eyed will spot the lack of assertions.
+Of course, if we then take a look at our link:src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen-eyed will spot the lack of assertions.
 
 Now of course a proper analysis tool like Sonar will point out this lack of assertions, but it's always nice to spot this sooner.
 
@@ -52,9 +52,9 @@ If we click on the package, and then our main class, we can see which mutations 
 
 image::raw/report2.png[]
 
-Now we know which holes in our testing remain, we can work towards fixing these and after these steps we can rerun the Pitests to verify how many mutations remain alive.
+Now we know which holes in our testing remain, we can work towards fixing these and after these steps, we can rerun the Pitests to verify how many mutations remain alive.
 
-For example let's add quite a (too) simplistic check for our decay:
+For example, let's add quite a (too) simplistic check for our decay:
 
 [source,java]
 ----
@@ -71,7 +71,7 @@ If we then run Pitest again, we'll already see some improvements:
 image::raw/report3.png[]
 
 However, we'll notice there are still a couple of surviving mutations.
-For example the second one, which makes since given both `100 - 5 * 5` and `100 - 5 / 5` result in a number lower than 100.
+For example, the second one, which makes sense given both `100 - 5 * 5` and `100 - 5 / 5` results in a number lower than 100.
 
 Now if we replace the above test with:
 
@@ -128,11 +128,11 @@ And as we can see after our run:
 
 image::raw/report5.png[]
 
-In this manner we can keep eliminating the gaps in our test coverage.
+In this manner, we can keep eliminating the gaps in our test coverage.
 
 == Configuration
 
-Pitest can be quite a resource intensive plugin, so proper configuration is important.
+Pitest can be quite a resource-intensive plugin, so proper configuration is important.
 For example, you can define which code is mutated, and which tests are run using it using `targetClasses` and `targetTests` respectively.
 
 You can define the percentage of mutations that should be eliminated using `mutationThreshold`
@@ -140,9 +140,9 @@ You can define the percentage of mutations that should be eliminated using `muta
 A list of configuration options can be found on the https://pitest.org/quickstart/commandline/[command line quick start] page.
 The list of possible features is shown when verbose logging is enabled.
 
-== My setup
+== Sample setup
 
-Personally I like to use this setup:
+Personally, I like to use this setup:
 
 [code, xml]
 ----
@@ -198,9 +198,9 @@ It's configured so that:
 
 The value of mutation testing lies in the analysis and the actions taken, not its execution.
 
-Given the resource cost it might be tempting to only run it nightly on your CI server. But it's like a tree falling in a forest. If nobody looks at the results, did the mutation tests really run?
+Given the resource cost, it might be tempting to only run it nightly on your CI server. But it's like a tree falling in a forest. If nobody looks at the results, did the mutation tests really run?
 
-Now of course, as documented earlier you can certainly set a target mutation score, and whilst that will help pinpoint gaps at the end, it's like a last minute scope change.
+Now of course, as documented earlier you can certainly set a target mutation score, and whilst that will help pinpoint gaps at the end, it's like a last-minute scope change.
 One thinks they're done, but yet not quite. It might make one grumble a bit, and add some test cases to satisfy the tool which is the wrong motivator.
 
 It's a tool to help you receive quick feedback in your development lifecycle, not at the end.
@@ -219,9 +219,9 @@ Please run it before your code's set in stone, especially as the implications of
 No, they're deterministic
 
 .  How are mutants created? +
-They're generated by bytecode manipulation, and held in memory (unless you use the `EXPORT` feature, and even then they're placed in the report directory, so no risk for accidentally releasing them)
+They're generated by bytecode manipulation, and held in memory (unless you use the `EXPORT` feature, and even then they're placed in the report directory, so there's no risk of accidentally releasing them)
 
-. Do I need to use a buildtool plugin?
+. Do I need to use a build tool plugin?
 * No, you can use Pitest from the command line, but using one of the build plugins is recommended, see for reference: https://pitest.org/quickstart/commandline/[command line quick start]
 
 . What are the requirements?
