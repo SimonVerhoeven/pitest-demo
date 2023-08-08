@@ -4,13 +4,14 @@
 
 == What is Pitest?
 
-Pitest is a library that helps us do mutation testing and thus helps us get a measure of the quality of our tests.
-It works by randomly seeding variations (aka mutants) in the code that's being tested.
-Hence, our tests will run against variants of the code we're intending to test.
-If the test fails, the mutation is killed, if it still passes it lives.
+Pitest is a library that helps us do mutation testing and thus helps us get a measure of the quality of our tests. +
 
+Mutations themselves are "random" variations in the code under test seeded by Pitest.
+Hence, our tests will run against variants of the code that we're intending to test.
+
+If the test fails, the mutation is killed, if it still passes it lives.
 Surviving mutations may indicate issues with our test set since application code changes should lead to different end results, and thus to failing tests.
-So to further reduce the survivors we will need to enhance our test cases and/or add extra ones.
+So to further reduce the survivors we will need to enhance our test cases and/or add extra.
 
 In other words, Pitest helps you assess the *quality* of your test suite.
 
@@ -22,7 +23,7 @@ A full list can be found at the https://pitest.org/quickstart/mutators/[Pitest M
 
 The question we have to ask ourselves is: `Who watches the watchmen?`
 
-By default, coverage reports give us information on what code is (not) tested, but no indication on whether our tests are actually able to detect issues properly.
+By default, coverage reports give us information on what code is (not) tested, but no indication of whether our tests are actually able to detect issues properly.
 
 After all, who here hasn't seen a codebase where the tests contain no asserts, yet all branches are executed?
 It can also help us find issues if there were gaps in our **T**est **D**riven **D**evelopment cadence.
@@ -57,7 +58,7 @@ A mutation can have the following states:
 * Non-viable mutation (invalid bytecode)
 * Timed Out
 * Memory error
-* Run error (akin to non viable, some of these can lead to a run error)
+* Run error (akin to non-viable, some of these can lead to a run error)
 
 image::raw/report2.png[]
 
@@ -194,7 +195,7 @@ Personally, I like to use this setup:
 </profile>
 ----
 
-With this setup I can just run `mvn -Ppitest test` to have everything mutated in my project, or I can pass in a glob to limit what gets mutated (`-DtargetClasses="dev.simonverhoeven.analyseme"`).
+With this setup, I can just run `mvn -Ppitest test` to have everything mutated in my project, or I can pass in a glob to limit what gets mutated (`-DtargetClasses="dev.simonverhoeven.analyseme"`).
 It's configured so that:
 
 * no failure if there is nothing to mutate
