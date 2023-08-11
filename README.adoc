@@ -6,7 +6,7 @@
 
 Pitest is a library that helps us do mutation testing and thus helps us get a measure of the quality of our tests. +
 
-Mutations themselves are "random" variations in the code under test seeded by Pitest.
+Mutations themselves are "random" variations in the code under test, seeded by Pitest.
 Hence, our tests will run against variants of the code that we're intending to test.
 
 If the test fails, the mutation is killed, if it still passes it lives.
@@ -48,7 +48,7 @@ As you can see
 
 image::raw/report1.png[]
 
-Things look a lot less good over here. Pitest mutated our code, and 6 out of 7 mutations survived.
+Things do not look quite as good over here. Pitest mutated our code, and 6 out of 7 mutations survived.
 If we click on the package, and then our main class, we can see which mutations were applied, where, and which survived.
 
 A mutation can have the following states:
