@@ -17,7 +17,7 @@ In other words, Pitest helps you assess the *quality* of your test suite.
 
 Mutations can take a lot of forms, relational operators being switched around, increments becoming decrements, calls to void methods being removed, ...
 
-A full list can be found at the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
+A full list can be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
 
 == Ok, but why should I use it?
 
