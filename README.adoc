@@ -4,18 +4,19 @@
 
 == What is Pitest?
 
-Pitest is a library that helps us do mutation testing and thus helps us get a measure of the quality of our tests. +
+Pitest is a library that helps us do mutation testing.
 
-Mutations themselves are "random" variations in the code under test, seeded by Pitest.
-Hence, our tests will run against variants of the code that we're intending to test.
+Mutation testing is a process in which random variations of the code under test are generated.
+Hence, our tests will run against variants of the code that we’re intending to test.
 
 If the test fails, the mutation is killed, if it still passes it lives.
+So in subsequent runs, you will see this mutation once again.
 Surviving mutations may indicate issues with our test set since application code changes should lead to different end results, and thus to failing tests.
 So to further reduce the survivors we will need to enhance our test cases and/or add extra.
 
 In other words, Pitest helps you assess the *quality* of your test suite.
 
-Mutations can take a lot of forms, relational operators being switched around, increments becoming decrements, calls to void methods being removed, ...
+Mutations can take a lot of forms, relational operators being switched around (+, -, *, /), increments becoming decrements, calls to void methods being removed, ...
 
 A full list can be found on the https://pitest.org/quickstart/mutators/[Pitest Mutator Overview Page]
 
@@ -32,6 +33,10 @@ It can also help us find issues if there were gaps in our **T**est **D**riven **
 
 
 == A short demo
+
+If you want to run the code yourself, please make sure you have `Maven` installed, and that you have cloned or downloaded the code from this GitHub repository.
+
+The actual application itself doesn't entail much, it just contains a simple function that's sensitive to mutations.
 
 Let's run `mvn test` on this project, and we'll get this magnificent JaCoCo project:
 
