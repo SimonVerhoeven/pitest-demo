@@ -57,6 +57,7 @@ Things do not look quite as good over here. Pitest mutated our code, and 6 out o
 If we click on the package, and then our main class, we can see which mutations were applied, where, and which survived.
 
 A mutation can have the following states:
+
 * Killed
 * Lived
 * No coverage (the same as lived, but just not covered by a test)
