@@ -10,9 +10,10 @@ Mutation testing is a process in which random variations of the code under test 
 Hence, our tests will run against variants of the code that we’re intending to test.
 
 If the test fails, the mutation is killed; if it still passes, it lives.
-So in subsequent runs, you will see this mutation once again.
+This helps us determine the mutation score, which is killed / (killed + survived)
+In subsequent runs, we will see the surviving mutations again.
 Surviving mutations may indicate issues with our test set since application code changes should lead to different results, and thus to failing tests.
-So to further reduce the survivors, we will need to enhance our test cases and/or add extra.
+So to further reduce the survivors, we will need to enhance our test cases and/or add more tests.
 
 In other words, Pitest helps you assess the *quality* of your test suite.
 
@@ -38,11 +39,11 @@ If you want to run the code yourself, please make sure you have `Maven` installe
 
 The actual application itself doesn't entail much; it just contains a simple function that's sensitive to mutations.
 
-Let's run `mvn test` on this project, and we'll get this magnificent JaCoCo project:
+Let's run `mvn test` on this project, and we'll get this magnificent JaCoCo report:
 
 image::raw/jacoco.png[]
 
-A line & branch coverage of 100% magnificent, isn't it?
+A line and branch coverage of 100% magnificent, isn't it?
 Of course, if we then take a look at our link: src/test/java/dev/simonverhoeven/pitestdemo/MainTest.java[tests] the keen-eyed will spot the lack of assertions.
 
 Now, of course, a proper analysis tool like Sonar will point out this lack of assertions, but it's always nice to spot this sooner.
@@ -68,7 +69,7 @@ A mutation can have the following states:
 
 image::raw/report2.png[]
 
-Now that we know which holes in our testing remain, we can work towards fixing these, and after these steps, we can rerun the Pitests to verify how many mutations remain alive.
+Now that we know where the holes in our testing remain, we can work towards fixing these, and after these steps, we can rerun the Pitests to verify how many mutations remain alive.
 
 For example, let's add quite a (too) simplistic check for our decay:
 
@@ -160,7 +161,7 @@ The list of possible features is shown when verbose logging is enabled.
 
 Personally, I like to use this setup:
 
-[code, xml]
+[source, xml]
 ----
 <profile>
     <id>pitest</id>
@@ -169,12 +170,12 @@ Personally, I like to use this setup:
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.14.2</version>
+                <version>1.22.1</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>1.2.0</version>
+                        <version>1.2.3</version>
                     </dependency>
                 </dependencies>
                 <executions>
