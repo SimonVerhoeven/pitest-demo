@@ -211,6 +211,14 @@ It's configured so that:
 * history in/output files are enabled to speed up the analysis
 * auto threads is enabled, so it uses the number of threads reported by my current machine *NOTE:* it is not recommended to use this on a CI server
 
+== Common reasons mutants survive
+
+Some common issues you'll see when first running Pitest are:
+
+* assertions too weak (only “result < initial”)
+* equivalent mutants (no observable behavior change)
+* untested branches / missing edge cases
+
 == Advice
 
 The value of mutation testing lies in the analysis and the actions taken, not its execution.
